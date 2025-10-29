@@ -7,14 +7,10 @@ export const useAppStore = defineStore('app', {
     tempoInicio: 0,
     volumeOn: true,
     
-    // Dados do jogo
+    // Dados do jogo - AGORA SIMPLES E FUNCIONAL
     sequencia: [],
     opcoes: [],
     respostaCorreta: null,
-    
-    // Estatísticas para a página final
-    tempoTotalJogo: '00:00',
-    padroesErro: [], // Agora inicializado como array vazio
     
     // Cores disponíveis
     cores: ['r', 'p', 'k', 'b', 'g', 'y']
@@ -49,7 +45,7 @@ export const useAppStore = defineStore('app', {
             { id: 1, cor: cor1, visivel: true },
             { id: 2, cor: cor2, visivel: true },
             { id: 3, cor: cor1, visivel: true },
-            { id: 4, cor: null, visivel: false }
+            { id: 4, cor: null, visivel: false } // Último oculto
           ];
           break;
           
@@ -63,7 +59,7 @@ export const useAppStore = defineStore('app', {
             { id: 1, cor: cor1, visivel: true },
             { id: 2, cor: cor1, visivel: true },
             { id: 3, cor: cor2, visivel: true },
-            { id: 4, cor: null, visivel: false }
+            { id: 4, cor: null, visivel: false } // Último oculto
           ];
           break;
           
@@ -79,16 +75,18 @@ export const useAppStore = defineStore('app', {
             { id: 1, cor: cor1, visivel: true },
             { id: 2, cor: cor2, visivel: true },
             { id: 3, cor: cor3, visivel: true },
-            { id: 4, cor: null, visivel: false }
+            { id: 4, cor: null, visivel: false } // Último oculto
           ];
           break;
       }
       
       this.respostaCorreta = resposta;
       console.log('Resposta correta:', resposta);
+      console.log('Sequência:', this.sequencia);
       
       // Gera opções de resposta
       this.gerarOpcoes(resposta);
+      console.log('Opções geradas:', this.opcoes);
     },
     
     // Obtém uma cor aleatória
@@ -153,24 +151,8 @@ export const useAppStore = defineStore('app', {
       if (opcao && opcao.correto) {
         this.acertos++;
         return true;
-      } else {
-        // Registra o erro se necessário
-        this.registrarErro();
-        return false;
       }
-    },
-    
-    // Registra um erro (simplificado)
-    registrarErro() {
-      // Pode expandir esta função depois se quiser registrar padrões de erro específicos
-      if (!this.padroesErro) {
-        this.padroesErro = [];
-      }
-      
-      this.padroesErro.push({
-        sequencia: this.sequencia.map(item => item.cor),
-        timestamp: Date.now()
-      });
+      return false;
     },
     
     // Reinicia o jogo
@@ -181,7 +163,6 @@ export const useAppStore = defineStore('app', {
       this.sequencia = [];
       this.opcoes = [];
       this.respostaCorreta = null;
-      this.padroesErro = [];
     }
   }
 })
