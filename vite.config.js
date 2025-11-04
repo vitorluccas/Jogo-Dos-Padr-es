@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Bandeiras',
-        short_name: 'Bandeiras',
-        description: 'Tente acertar as bandeiras',
+        name: 'Padrões',
+        short_name: 'Padroẽs',
+        description: 'Tente acertar as padrões',
         theme_color: '#ffffff',
         icons: [
           {
